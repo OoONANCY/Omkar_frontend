@@ -31,6 +31,7 @@ body {
   height: 64px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Add this for Safari support */
   z-index: 1000;
   transition: all 0.3s ease;
   border-bottom: 1px solid var(--border-color);
@@ -423,4 +424,32 @@ body {
 
 .article-btn:hover {
   background: var(--hover-color);
+}
+
+/* File: /Omkar-frontend/Omkar_frontend/src/App.css */
+
+/* Add these styles at the end of the file */
+
+.toggle-3d-btn {
+  padding: 12px 24px;
+  background: var(--accent-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.toggle-3d-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* File: /Omkar-frontend/Omkar_frontend/src/App.css */
+
+.brain-viewer-container {
+  width: 100%;
+  height: calc(100vh - 160px); /* Adjust height as needed */
+  position: relative;
+  background-color: #000; /* Add a background color for debugging */
 }

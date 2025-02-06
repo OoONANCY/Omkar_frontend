@@ -1,47 +1,43 @@
-import { useState } from 'react'
+import BrainModelViewer from './BrainModelViewer';
+import { useState } from 'react';
 
 function Chat() {
-  const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hello! How can I help you today?' }
-  ]);
-  const [input, setInput] = useState('');
+  const [show3DViewer, setShow3DViewer] = useState(false);
+  const [niftiFiles, setNiftiFiles] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+  const handleFileSelection = async (event) => {
+    const files = Array.from(event.target.files);
     
-    setMessages([...messages, 
-      { role: 'user', content: input },
-      { role: 'assistant', content: 'This is a demo response. The actual chat functionality would be implemented with a real backend.' }
-    ]);
-    setInput('');
+    // Ensure only NIfTI files are selected
+    const niiFiles = files
+      .filter(file => file.name.endsWith(".nii"))
+      .map(file => URL.createObjectURL(file)); // Convert to object URL for loading
+
+    if (niiFiles.length !== 4) {
+      alert("Please select exactly 4 NIfTI files.");
+      return;
+    }
+
+    setNiftiFiles(niiFiles);
+    setShow3DViewer(true);
   };
 
   return (
     <div className="chat-container">
-      <div className="chat-messages">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.role}`}>
-            <div className="message-content">
-              {message.content}
-            </div>
-          </div>
-        ))}
-      </div>
-      <form onSubmit={handleSubmit} className="chat-input-container">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message here..."
-          className="chat-input"
-        />
-        <button type="submit" className="chat-submit">
-          Send
-        </button>
-      </form>
+      <button onClick={() => setShow3DViewer(!show3DViewer)}>
+        {show3DViewer ? 'Show Chat' : 'Show 3D Brain Model'}
+      </button>
+
+      {!show3DViewer && (
+        <>
+          <input type="file" multiple onChange={handleFileSelection} />
+          <p>Select 4 NIfTI files to render the brain model.</p>
+        </>
+      )}
+
+      {show3DViewer && niftiFiles.length === 4 && <BrainModelViewer niftiFiles={niftiFiles} />}
     </div>
-  )
+  );
 }
 
-export default Chat
+export default Chat;
