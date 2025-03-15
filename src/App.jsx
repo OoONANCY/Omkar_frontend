@@ -1,23 +1,20 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Features from './components/Features'
-import Customers from './components/Customers'
-import Deploy from './components/Deploy'
-import Footer from './components/Footer'
-import Chat from './components/Chat'
-import Articles from './components/Articles'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Products from "./components/Products";
+import Chat from "./components/Chat";
+import About from "./pages/About";
+import NotFound from "./components/NotFound";
+import BrainSegmentationViewer from "./components/BrainSegmentationViewer"; // Import the new component
 
 function HomePage() {
   return (
     <>
       <Hero />
-      <Customers />
-      <Features />
-      <Deploy />
+      <Products />
     </>
-  )
+  );
 }
 
 function App() {
@@ -29,13 +26,15 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/articles" element={<Articles />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/brain-segmentation" element={<BrainSegmentationViewer />} /> {/* New route */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
-        <Footer />
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
